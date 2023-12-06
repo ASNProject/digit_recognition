@@ -48,7 +48,7 @@ for img in [img_source, gray, thresh, opening_img, canny_img]:
             if int(d['conf'][i]) > 60 and d['text'][i].isdigit():
                 result_digits += d['text'][i]
 
-        # Print the concatenated digits without a newline
+        #Print the concatenated digits without a newline
         print(result_digits)
 
         cv2.imshow('img', img)
