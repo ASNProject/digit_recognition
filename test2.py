@@ -6,22 +6,22 @@ from pytesseract import Output
 img_source = cv2.imread('5.jpeg')
 
 
-def get_grayscale(img):
-    return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+def get_grayscale(image):
+    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
-def thresholding(img):
-    gray = get_grayscale(img)
-    return cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+def thresholding(image):
+    grayscale = get_grayscale(image)
+    return cv2.threshold(grayscale, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 
 
-def opening(img):
+def opening(image):
     kernel = np.ones((5, 5), np.uint8)
-    return cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
+    return cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
 
 
-def canny(img):
-    return cv2.Canny(img, 100, 200)
+def canny(image):
+    return cv2.Canny(image, 100, 200)
 
 
 gray = get_grayscale(img_source)
@@ -48,7 +48,7 @@ for img in [img_source, gray, thresh, opening_img, canny_img]:
             if int(d['conf'][i]) > 60 and d['text'][i].isdigit():
                 result_digits += d['text'][i]
 
-        #Print the concatenated digits without a newline
+        # Print the concatenated digits without a newline
         print(result_digits)
 
         cv2.imshow('img', img)
