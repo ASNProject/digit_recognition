@@ -1,0 +1,61 @@
+body {
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  color: #000;
+  text-align: center;
+}
+h4 {
+  text-align: center;
+}
+
+.camera-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Mengatur agar elemen berada di tengah secara horizontal */
+}
+
+.img-container {
+  width: 100%;
+  border: 3px solid #000;
+  border-radius: 6px;
+  overflow: hidden;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+}
+
+img {
+  width: 100%;
+}
+
+#captureButton {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #3aaa35;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#captureButton2 {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #3aaa35;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.text-container {
+  padding: 20px; /* Padding pada elemen text-container */
+  text-align: center;
+}

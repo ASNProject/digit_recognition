@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Camera Testing</title>
+    <link rel="stylesheet" href="../static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Digit Recognition</h1>
+      <h4>Capture 1</h4>
+      <div class="camera-container">
+        <div class="img-container">
+          <img src="{{ url_for('video_feed') }}" />
+        </div>
+        <!-- Add your button here -->
+        <button id="captureButton">Capture Image</button>
+      </div>
+      <div class="text-container">
+        <!-- Add your text content here -->
+        <p>Your text content goes here.</p>
+      </div>
+      <h4>Capture 2</h4>
+      <div class="camera-container">
+        <div class="img-container">
+          <img src="{{ url_for('video_feed') }}" />
+        </div>
+        <!-- Add your button here -->
+        <button id="captureButton2">Capture Image</button>
+      </div>
+      <div class="text-container">
+        <!-- Add your text content here -->
+        <p>Your text content goes here.</p>
+      </div>
+    </div>
+
+    <!-- You may include your JavaScript here if needed -->
+<script>
+  document.getElementById("captureButton").addEventListener("click", function() {
+    // Mendapatkan gambar dari elemen img
+    var img = document.querySelector('.img-container img');
+
+    // Membuat kanvas untuk menggambar gambar
+    var canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+
+    // Mendapatkan data URL gambar dari kanvas
+    var imageDataUrl = canvas.toDataURL('image/jpeg');
+
+    // Membuat elemen 'a' untuk mendownload gambar
+    var downloadLink = document.createElement('a');
+    downloadLink.href = imageDataUrl;
+    downloadLink.download = 'captured_image.jpg';
+
+    // Menambahkan elemen 'a' ke dokumen dan mengkliknya untuk memulai proses unduhan
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  });
+</script>
+
+  </body>
+</html>

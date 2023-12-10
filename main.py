@@ -1,16 +1,52 @@
-# This is a sample Python script.
+import requests
+from flask import Flask, render_template, Response
+import cv2
+import numpy as np
+import os
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+app = Flask(__name__)
+UPLOAD_FOLDER = 'capture/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+@app.route('/')
+def index():
+    """Video streaming home page."""
+    return render_template('index.html')
 
 
-# Press the green button in the gutter to run the script.
+def gen():
+    """Video streaming generator function."""
+    vs = cv2.VideoCapture(0)
+    while True:
+        ret, frame = vs.read()
+        ret, jpeg = cv2.imencode('.jpg', frame)
+        frame = jpeg.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    vs.release()
+    cv2.destroyAllWindows()
+
+
+def save_images(image):
+    filename = '1.jpg'
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    cv2.imwrite(filepath, image)
+
+
+@app.route('/video_feed')
+def video_feed():
+    """Video streaming"""
+    return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+def save_image_route():
+    content = requests.get_data()
+    nparr = np.frombuffer(content, np.uint8)
+    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    save_images(image)
+    return 'Gambar berhasil disimpan'
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
