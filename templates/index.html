@@ -90,8 +90,8 @@
                 <div class="img-container">
                     <img src="" id="capturedImage" />
                 </div>
-                <button id="checkResult1">Detect</button>
-                <div class="text-container">
+                <button id="checkResult1" onclick="detectImage()">Detect</button>
+                <div class="text-container" id="resultContainer">
                     <!-- Add your text content here -->
                     <p>Your text content goes here.</p>
                 </div>
@@ -126,6 +126,20 @@
             })
             .then(response => response.text())
             .then(message => console.log(message))
+            .catch(error => console.error('Error:', error));
+        }
+        function detectImage() {
+            // Send a request to the server to run the detect_image function
+            fetch('/detect_image', {
+                method: 'GET',
+            })
+            .then(response => response.text())
+            .then(result => {
+                // Display the result or handle it as needed
+                console.log(result);
+                var resultContainer = document.getElementById('resultContainer');
+                resultContainer.innerHTML = '<p>Result: ' + result + '</p>';
+            })
             .catch(error => console.error('Error:', error));
         }
     </script>

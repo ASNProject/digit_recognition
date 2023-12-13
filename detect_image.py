@@ -34,5 +34,7 @@ def detect_image():
             # Print the concatenated digits without a newline
             print(result_digits)
 
+            return result_digits
+
             # cv2.imshow('img', img)
             # cv2.waitKey(0)

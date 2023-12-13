@@ -1,6 +1,5 @@
 from flask import Flask, render_template, Response, request
 import cv2
-import numpy as np
 import os
 import base64
 from detect_image import detect_image
@@ -53,6 +52,12 @@ def save_image():
         f.write(image_bytes)
 
     return 'Gambar berhasil disimpan di {}'.format(file_path)
+
+
+@app.route('/detect_image', methods=['GET'])
+def run_detect_image():
+    detect_image()
+    return detect_image()
 
 
 if __name__ == '__main__':
