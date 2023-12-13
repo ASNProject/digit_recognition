@@ -31,13 +31,13 @@
             </div>
         </div>
 
-                <div class="camera-capture-container">
+        <div class="camera-capture-container">
             <div class="camera-container">
                 <h4>Take Picture 2</h4>
                 <div class="img-container">
                     <img src="{{ url_for('video_feed') }}" id="cameraImage2"/>
                 </div>
-                <button id="captureButton2" onclick="captureImage()">Capture Image 2</button>
+                <button id="captureButton2" onclick="captureImage2()">Capture Image 2</button>
             </div>
 
             <div class="captured-image-container">
@@ -45,7 +45,7 @@
                 <div class="img-container">
                     <img src="" id="capturedImage2" />
                 </div>
-                <button id="checkResult2" onclick="detectImage()">Detect 2</button>
+                <button id="checkResult2" onclick="detectImage2()">Detect 2</button>
                 <div class="text-container" id="resultContainer2">
                     <!-- Add your text content here -->
                     <p>Your text content goes here.</p>
@@ -101,7 +101,7 @@
 
 
 
-        function captureImage() {
+        function captureImage2() {
             var img = document.getElementById('cameraImage2');
             var canvas = document.createElement('canvas');
             canvas.width = img.width;
@@ -126,7 +126,7 @@
             .then(message => console.log(message))
             .catch(error => console.error('Error:', error));
         }
-        function detectImage() {
+        function detectImage2() {
             // Send a request to the server to run the detect_image function
             fetch('/detect_image2', {
                 method: 'GET',
