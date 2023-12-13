@@ -89,6 +89,9 @@ img {
 #cameraImage {
     max-width: 300px; /* Set the maximum width as needed */
 }
+#cameraImage2 {
+    max-width: 300px; /* Set the maximum width as needed */
+}
 
 button {
     margin-top: 10px;
@@ -103,8 +106,27 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
+#captureButton2 {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #3aaa35;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 #checkResult1 {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #3aaa35;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#checkResult2 {
   margin-top: 10px;
   padding: 10px;
   background-color: #3aaa35;

@@ -82,7 +82,7 @@
                 <div class="img-container">
                     <img src="{{ url_for('video_feed') }}" id="cameraImage"/>
                 </div>
-                <button id="captureButton" onclick="captureImage()">Capture Image</button>
+                <button id="captureButton" onclick="captureImage()">Capture Image1</button>
             </div>
 
             <div class="captured-image-container">
@@ -90,8 +90,30 @@
                 <div class="img-container">
                     <img src="" id="capturedImage" />
                 </div>
-                <button id="checkResult1" onclick="detectImage()">Detect</button>
+                <button id="checkResult1" onclick="detectImage()">Detect 1</button>
                 <div class="text-container" id="resultContainer">
+                    <!-- Add your text content here -->
+                    <p>Your text content goes here.</p>
+                </div>
+            </div>
+        </div>
+
+                <div class="camera-capture-container">
+            <div class="camera-container">
+                <h4>Take Picture 2</h4>
+                <div class="img-container">
+                    <img src="{{ url_for('video_feed') }}" id="cameraImage2"/>
+                </div>
+                <button id="captureButton2" onclick="captureImage()">Capture Image 2</button>
+            </div>
+
+            <div class="captured-image-container">
+                <h4>Captured Image 2</h4>
+                <div class="img-container">
+                    <img src="" id="capturedImage2" />
+                </div>
+                <button id="checkResult2" onclick="detectImage()">Detect 2</button>
+                <div class="text-container" id="resultContainer2">
                     <!-- Add your text content here -->
                     <p>Your text content goes here.</p>
                 </div>
@@ -138,6 +160,49 @@
                 // Display the result or handle it as needed
                 console.log(result);
                 var resultContainer = document.getElementById('resultContainer');
+                resultContainer.innerHTML = '<p>Result: ' + result + '</p>';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+
+
+
+        function captureImage() {
+            var img = document.getElementById('cameraImage2');
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var imageDataUrl = canvas.toDataURL('image/jpeg');
+
+            // Display the captured image
+            var capturedImage = document.getElementById('capturedImage2');
+            capturedImage.src = imageDataUrl;
+
+            // Kirim data gambar ke Flask
+            fetch('/save_image2', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image_data: imageDataUrl }),
+            })
+            .then(response => response.text())
+            .then(message => console.log(message))
+            .catch(error => console.error('Error:', error));
+        }
+        function detectImage() {
+            // Send a request to the server to run the detect_image function
+            fetch('/detect_image2', {
+                method: 'GET',
+            })
+            .then(response => response.text())
+            .then(result => {
+                // Display the result or handle it as needed
+                console.log(result);
+                var resultContainer = document.getElementById('resultContainer2');
                 resultContainer.innerHTML = '<p>Result: ' + result + '</p>';
             })
             .catch(error => console.error('Error:', error));

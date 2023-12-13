@@ -2,7 +2,7 @@ from flask import Flask, render_template, Response, request
 import cv2
 import os
 import base64
-from detect_image import detect_image
+from detect_image import detect_image, detect_image2
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'capture'
@@ -54,10 +54,36 @@ def save_image():
     return 'Gambar berhasil disimpan di {}'.format(file_path)
 
 
+@app.route('/save_image2', methods=['POST'])
+def save_image2():
+    data = request.get_json()
+    image_data = data.get('image_data', '')
+
+    # Decode data URL menjadi array byte
+    image_data = image_data.split(',')[1]
+    image_bytes = base64.b64decode(image_data)
+
+    # Path untuk menyimpan gambar
+    folder_path = 'capture'
+    file_path = os.path.join(folder_path, '2.jpg')
+
+    # Simpan gambar ke file
+    with open(file_path, 'wb') as f:
+        f.write(image_bytes)
+
+    return 'Gambar berhasil disimpan di {}'.format(file_path)
+
+
 @app.route('/detect_image', methods=['GET'])
 def run_detect_image():
     detect_image()
     return detect_image()
+
+
+@app.route('/detect_image2', methods=['GET'])
+def run_detect_image2():
+    detect_image2()
+    return detect_image2()
 
 
 if __name__ == '__main__':
