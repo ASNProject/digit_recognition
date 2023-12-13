@@ -10,6 +10,5 @@ sudo apt-get install python3-flask
 ```
 
 ### Screenshot
-
-https://github.com/ASNProject/digit_recognition/assets/49858542/e1933fd8-2854-4281-8b83-7fea12184b57
+https://github.com/ASNProject/digit_recognition/assets/49858542/527b08ec-1a70-45fb-80d6-1264943d85d8
 
