@@ -1,11 +1,11 @@
-import requests
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request
 import cv2
-import numpy as np
 import os
+import base64
+from detect_image import detect_image, detect_image2
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'capture/images'
+UPLOAD_FOLDER = 'capture'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -28,24 +28,62 @@ def gen():
     cv2.destroyAllWindows()
 
 
-def save_images(image):
-    filename = '1.jpg'
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    cv2.imwrite(filepath, image)
-
-
 @app.route('/video_feed')
 def video_feed():
     """Video streaming"""
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-def save_image_route():
-    content = requests.get_data()
-    nparr = np.frombuffer(content, np.uint8)
-    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    save_images(image)
-    return 'Gambar berhasil disimpan'
+@app.route('/save_image', methods=['POST'])
+def save_image():
+    data = request.get_json()
+    image_data = data.get('image_data', '')
+
+    # Decode data URL menjadi array byte
+    image_data = image_data.split(',')[1]
+    image_bytes = base64.b64decode(image_data)
+
+    # Path untuk menyimpan gambar
+    folder_path = 'capture'
+    file_path = os.path.join(folder_path, '1.jpg')
+
+    # Simpan gambar ke file
+    with open(file_path, 'wb') as f:
+        f.write(image_bytes)
+
+    return 'Gambar berhasil disimpan di {}'.format(file_path)
+
+
+@app.route('/save_image2', methods=['POST'])
+def save_image2():
+    data = request.get_json()
+    image_data = data.get('image_data', '')
+
+    # Decode data URL menjadi array byte
+    image_data = image_data.split(',')[1]
+    image_bytes = base64.b64decode(image_data)
+
+    # Path untuk menyimpan gambar
+    folder_path = 'capture'
+    file_path = os.path.join(folder_path, '2.jpg')
+
+    # Simpan gambar ke file
+    with open(file_path, 'wb') as f:
+        f.write(image_bytes)
+
+    return 'Gambar berhasil disimpan di {}'.format(file_path)
+
+
+@app.route('/detect_image', methods=['GET'])
+def run_detect_image():
+    detect_image()
+    return detect_image()
+
+
+@app.route('/detect_image2', methods=['GET'])
+def run_detect_image2():
+    detect_image2()
+    return detect_image2()
 
 
 if __name__ == '__main__':

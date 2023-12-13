@@ -1,66 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>Camera Testing</title>
     <link rel="stylesheet" href="../static/styles.css" />
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <h1>Digit Recognition</h1>
-      <h4>Capture 1</h4>
-      <div class="camera-container">
-        <div class="img-container">
-          <img src="{{ url_for('video_feed') }}" />
+        <h1>Digit Recognition</h1>
+
+        <div class="camera-capture-container">
+            <div class="camera-container">
+                <h4>Take Picture 1</h4>
+                <div class="img-container">
+                    <img src="{{ url_for('video_feed') }}" id="cameraImage"/>
+                </div>
+                <button id="captureButton" onclick="captureImage()">Capture Image1</button>
+            </div>
+
+            <div class="captured-image-container">
+                <h4>Captured Image 1</h4>
+                <div class="img-container">
+                    <img src="" id="capturedImage" />
+                </div>
+                <button id="checkResult1" onclick="detectImage()">Detect 1</button>
+                <div class="text-container" id="resultContainer">
+                    <!-- Add your text content here -->
+                    <p>Your text content goes here.</p>
+                </div>
+            </div>
         </div>
-        <!-- Add your button here -->
-        <button id="captureButton">Capture Image</button>
-      </div>
-      <div class="text-container">
-        <!-- Add your text content here -->
-        <p>Your text content goes here.</p>
-      </div>
-      <h4>Capture 2</h4>
-      <div class="camera-container">
-        <div class="img-container">
-          <img src="{{ url_for('video_feed') }}" />
+
+        <div class="camera-capture-container">
+            <div class="camera-container">
+                <h4>Take Picture 2</h4>
+                <div class="img-container">
+                    <img src="{{ url_for('video_feed') }}" id="cameraImage2"/>
+                </div>
+                <button id="captureButton2" onclick="captureImage2()">Capture Image 2</button>
+            </div>
+
+            <div class="captured-image-container">
+                <h4>Captured Image 2</h4>
+                <div class="img-container">
+                    <img src="" id="capturedImage2" />
+                </div>
+                <button id="checkResult2" onclick="detectImage2()">Detect 2</button>
+                <div class="text-container" id="resultContainer2">
+                    <!-- Add your text content here -->
+                    <p>Your text content goes here.</p>
+                </div>
+            </div>
         </div>
-        <!-- Add your button here -->
-        <button id="captureButton2">Capture Image</button>
-      </div>
-      <div class="text-container">
-        <!-- Add your text content here -->
-        <p>Your text content goes here.</p>
-      </div>
+
+
     </div>
 
     <!-- You may include your JavaScript here if needed -->
-<script>
-  document.getElementById("captureButton").addEventListener("click", function() {
-    // Mendapatkan gambar dari elemen img
-    var img = document.querySelector('.img-container img');
+    <script>
+        function captureImage() {
+            var img = document.getElementById('cameraImage');
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var imageDataUrl = canvas.toDataURL('image/jpeg');
 
-    // Membuat kanvas untuk menggambar gambar
-    var canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, img.width, img.height);
+            // Display the captured image
+            var capturedImage = document.getElementById('capturedImage');
+            capturedImage.src = imageDataUrl;
 
-    // Mendapatkan data URL gambar dari kanvas
-    var imageDataUrl = canvas.toDataURL('image/jpeg');
+            // Kirim data gambar ke Flask
+            fetch('/save_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image_data: imageDataUrl }),
+            })
+            .then(response => response.text())
+            .then(message => console.log(message))
+            .catch(error => console.error('Error:', error));
+        }
+        function detectImage() {
+            // Send a request to the server to run the detect_image function
+            fetch('/detect_image', {
+                method: 'GET',
+            })
+            .then(response => response.text())
+            .then(result => {
+                // Display the result or handle it as needed
+                console.log(result);
+                var resultContainer = document.getElementById('resultContainer');
+                resultContainer.innerHTML = '<p>Result: ' + result + '</p>';
+            })
+            .catch(error => console.error('Error:', error));
+        }
 
-    // Membuat elemen 'a' untuk mendownload gambar
-    var downloadLink = document.createElement('a');
-    downloadLink.href = imageDataUrl;
-    downloadLink.download = 'captured_image.jpg';
 
-    // Menambahkan elemen 'a' ke dokumen dan mengkliknya untuk memulai proses unduhan
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-  });
-</script>
 
-  </body>
+
+        function captureImage2() {
+            var img = document.getElementById('cameraImage2');
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var imageDataUrl = canvas.toDataURL('image/jpeg');
+
+            // Display the captured image
+            var capturedImage = document.getElementById('capturedImage2');
+            capturedImage.src = imageDataUrl;
+
+            // Kirim data gambar ke Flask
+            fetch('/save_image2', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image_data: imageDataUrl }),
+            })
+            .then(response => response.text())
+            .then(message => console.log(message))
+            .catch(error => console.error('Error:', error));
+        }
+        function detectImage2() {
+            // Send a request to the server to run the detect_image function
+            fetch('/detect_image2', {
+                method: 'GET',
+            })
+            .then(response => response.text())
+            .then(result => {
+                // Display the result or handle it as needed
+                console.log(result);
+                var resultContainer = document.getElementById('resultContainer2');
+                resultContainer.innerHTML = '<p>Result: ' + result + '</p>';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
 </html>
+
+
+
