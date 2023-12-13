@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import os
 import base64
+from detect_image import detect_image
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'capture'

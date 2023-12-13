@@ -5,7 +5,7 @@ from utils import get_grayscale, thresholding, opening, canny
 
 
 def detect_image():
-    img_source = cv2.imread('assets/5.jpeg')
+    img_source = cv2.imread('capture/1.jpg')
 
     gray = get_grayscale(img_source)
     thresh = thresholding(img_source)
@@ -34,5 +34,5 @@ def detect_image():
             # Print the concatenated digits without a newline
             print(result_digits)
 
-            cv2.imshow('img', img)
-            cv2.waitKey(0)
+            # cv2.imshow('img', img)
+            # cv2.waitKey(0)
