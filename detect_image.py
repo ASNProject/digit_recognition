@@ -4,6 +4,16 @@ from pytesseract import Output
 from utils import get_grayscale, thresholding, opening, canny
 
 
+def sumResult():
+    result1 = detect_image()
+    result2 = detect_image2()
+    if result1 == result2:
+        sum_result = "Hasil Sama"
+    else:
+        sum_result = "Hasil Beda"
+    return sum_result
+
+
 def detect_image():
     img_source = cv2.imread('capture/1.jpg')
 

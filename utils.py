@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from flask import Flask, render_template, Response
 
 
 def get_grayscale(image):
@@ -19,5 +18,3 @@ def opening(image):
 
 def canny(image):
     return cv2.Canny(image, 100, 200)
-
-

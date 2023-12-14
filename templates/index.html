@@ -53,7 +53,11 @@
             </div>
         </div>
 
-
+        <button id="sumResult" onclick="sumResult()">Result</button>
+        <div class="text-container" id="sumResultContainer2">
+            <!-- Add your text content here -->
+            <p>Your text content goes here.</p>
+        </div>
     </div>
 
     <!-- You may include your JavaScript here if needed -->
@@ -137,6 +141,19 @@
                 console.log(result);
                 var resultContainer = document.getElementById('resultContainer2');
                 resultContainer.innerHTML = '<p>Result: ' + result + '</p>';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function sumResult() {
+            fetch('/result', {
+            method: 'GET',
+            })
+            .then(response => response.text())
+            .then(result => {
+                console.log(result);
+                var resultContainer = document.getElementById('sumResultContainer2');
+                resultContainer.innerHTML = '<p>Result: ' + result + '<p>';
             })
             .catch(error => console.error('Error:', error));
         }
