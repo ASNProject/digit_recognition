@@ -2,7 +2,7 @@ from flask import Flask, render_template, Response, request
 import cv2
 import os
 import base64
-from detect_image import detect_image, detect_image2
+from detect_image import detect_image, detect_image2, sumResult
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'capture'
@@ -84,6 +84,12 @@ def run_detect_image():
 def run_detect_image2():
     detect_image2()
     return detect_image2()
+
+
+@app.route('/result', methods=['GET'])
+def result():
+    sumResult()
+    return sumResult()
 
 
 if __name__ == '__main__':
