@@ -13,7 +13,7 @@ sudo apt-get install python3-flask
 ```
 python main.py
 ```
-- Open ip address with browser
+- Open ip address with browser<br/>
 Example
 ```
  * Running on all addresses (0.0.0.0)
