@@ -88,8 +88,9 @@ def run_detect_image2():
 
 @app.route('/result', methods=['GET'])
 def result():
-    sumResult()
-    return sumResult()
+    sum_result = sumResult()
+    response_str = str(sum_result)
+    return response_str
 
 
 if __name__ == '__main__':
