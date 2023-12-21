@@ -10,9 +10,21 @@ sudo apt-get install python3-flask
 ```
 
 ### Run & Debug
+To run program with camera use this comment:
 ```
 python main.py
 ```
+
+To run program without camera use this comment:
+```
+python main_image.py
+```
+Note:
+Please replace line below in function detect_image() and detect_image2() before run program
+```
+img_source = cv2.imread('capture/2.jpg')
+```
+
 - Open ip address with browser<br/>
 Example:
 ```
