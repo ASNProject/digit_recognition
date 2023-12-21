@@ -20,7 +20,7 @@ python main.py
 python main_image.py
 ```
 Note:
-Please replace line below in function detect_image() and detect_image2() before run program
+Please replace line below in function detect_image() and detect_image2() before run program without camera
 ```
 img_source = cv2.imread('capture/2.jpg')
 ```
