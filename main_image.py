@@ -39,12 +39,10 @@ def detect_image():
                     result_digits += d['text'][i]
 
             # Print the concatenated digits without a newline
-            print(result_digits)
+            print("Meteran1 : " + str(result_digits))
 
+            cv2.imshow('img1', img)
             return result_digits
-
-            # cv2.imshow('img', img)
-            # cv2.waitKey(0)
 
 
 def detect_image2():
@@ -75,9 +73,13 @@ def detect_image2():
                     result_digits += d['text'][i]
 
             # Print the concatenated digits without a newline
-            print(result_digits)
+            print("Meteran2 : " + str(result_digits))
 
+            cv2.imshow('img2', img)
             return result_digits
 
-            # cv2.imshow('img', img)
-            # cv2.waitKey(0)
+
+result = sumResult()
+print('HASILNYA = ' + str(result))
+cv2.waitKey(0)
+cv2.destroyAllWindows()
