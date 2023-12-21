@@ -25,7 +25,7 @@ Please replace line below in function detect_image() and detect_image2() before 
 img_source = cv2.imread('capture/2.jpg')
 ```
 
-- Open ip address with browser<br/>
+Open ip address with browser<br/>
 Example:
 ```
  * Running on all addresses (0.0.0.0)
